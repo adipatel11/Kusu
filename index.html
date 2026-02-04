@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Valentine Countdown</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <section id="countdown-screen" class="screen">
+        <img src="heart.png" alt="Heart" class="heart" />
+        <p id="timer" class="timer">00:00:00</p>
+      </section>
+
+      <section id="question-screen" class="screen hidden">
+        <h1 class="question">Will you be my valentine?</h1>
+        <button id="yes-btn" class="yes-btn" type="button">Yes</button>
+      </section>
+    </main>
+
+    <canvas id="confetti-canvas" class="confetti-canvas hidden"></canvas>
+    <script src="script.js"></script>
+  </body>
+</html>
