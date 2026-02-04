@@ -1,7 +1,8 @@
 const timerEl = document.getElementById("timer");
 const countdownScreen = document.getElementById("countdown-screen");
 const questionScreen = document.getElementById("question-screen");
-const yesBtn = document.getElementById("yes-btn");
+const yesButtonsWrap = document.getElementById("yes-buttons");
+const yesButtons = document.querySelectorAll(".yes-btn");
 const confettiCanvas = document.getElementById("confetti-canvas");
 const confettiCtx = confettiCanvas.getContext("2d");
 
@@ -107,9 +108,11 @@ function triggerConfetti() {
   drawConfetti();
 }
 
-yesBtn.addEventListener("click", () => {
-  yesBtn.classList.add("hidden");
-  triggerConfetti();
+yesButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    yesButtonsWrap.classList.add("hidden");
+    triggerConfetti();
+  });
 });
 
 window.addEventListener("resize", resizeCanvas);

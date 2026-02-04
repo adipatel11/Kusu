@@ -58,6 +58,13 @@ body {
   text-transform: lowercase;
 }
 
+.yes-buttons {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .yes-btn {
   border: none;
   border-radius: 999px;
