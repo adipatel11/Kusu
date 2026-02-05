@@ -10,18 +10,23 @@ let confettiPieces = [];
 let confettiFrame = null;
 let countdownInterval = null;
 
-function getTonightAt11PM() {
-  const target = new Date();
-  target.setHours(23, 0, 0, 0);
-  return target;
+function getTargetDate() {
+  return new Date(2026, 1, 21, 22, 0, 0, 0);
 }
 
 function formatTime(msRemaining) {
   const totalSeconds = Math.floor(msRemaining / 1000);
-  const hours = String(Math.floor(totalSeconds / 3600)).padStart(2, "0");
-  const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, "0");
-  const seconds = String(totalSeconds % 60).padStart(2, "0");
-  return `${hours}:${minutes}:${seconds}`;
+  const days = Math.floor(totalSeconds / 86400);
+  const hours = Math.floor((totalSeconds % 86400) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  const dayStr = String(days).padStart(2, "0");
+  const hourStr = String(hours).padStart(2, "0");
+  const minStr = String(minutes).padStart(2, "0");
+  const secStr = String(seconds).padStart(2, "0");
+
+  return `${dayStr}:${hourStr}:${minStr}:${secStr}`;
 }
 
 function showQuestionScreen() {
@@ -31,12 +36,12 @@ function showQuestionScreen() {
 
 function updateCountdown() {
   const now = new Date();
-  const target = getTonightAt11PM();
+  const target = getTargetDate();
   const remaining = target - now;
 
   if (remaining <= 0) {
     clearInterval(countdownInterval);
-    timerEl.textContent = "00:00:00";
+    timerEl.textContent = "00:00:00:00";
     showQuestionScreen();
     return;
   }
@@ -51,7 +56,14 @@ function resizeCanvas() {
 
 function createConfettiBurst() {
   confettiPieces = [];
-  const colors = ["#ff4f8a", "#ff8ab2", "#ffc2d7", "#ffd166", "#8ecae6", "#bde0fe"];
+  const colors = [
+    "#ff4f8a",
+    "#ff8ab2",
+    "#ffc2d7",
+    "#ffd166",
+    "#8ecae6",
+    "#bde0fe",
+  ];
   const count = 180;
 
   for (let i = 0; i < count; i += 1) {
@@ -65,7 +77,7 @@ function createConfettiBurst() {
       rotationSpeed: (Math.random() - 0.5) * 0.3,
       size: 6 + Math.random() * 8,
       alpha: 1,
-      color: colors[Math.floor(Math.random() * colors.length)]
+      color: colors[Math.floor(Math.random() * colors.length)],
     });
   }
 }
@@ -89,7 +101,12 @@ function drawConfetti() {
     confettiCtx.translate(piece.x, piece.y);
     confettiCtx.rotate(piece.rotation);
     confettiCtx.fillStyle = piece.color;
-    confettiCtx.fillRect(-piece.size / 2, -piece.size / 2, piece.size, piece.size * 0.6);
+    confettiCtx.fillRect(
+      -piece.size / 2,
+      -piece.size / 2,
+      piece.size,
+      piece.size * 0.6,
+    );
     confettiCtx.restore();
   }
 
